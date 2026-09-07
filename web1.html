@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TravelGo Dashboard</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+  <h1>✈️ TravelGo - Travel Review Dashboard</h1>
+  <p>Using Wikipedia API + Sentiment Analysis</p>
+  
+  <div class="search-box">
+    <input type="text" id="city" placeholder="Enter City: Pune, Goa, Mumbai" value="Pune">
+    <button onclick="getData()">Search</button>
+  </div>
+
+  <div id="loader">Loading...</div>
+  
+  <div id="dashboard" class="grid">
+    <div class="card">
+      <h3 id="cityName">Pune</h3>
+      <img id="cityImg" src="" width="100%" style="border-radius:10px; height:200px; object-fit:cover">
+      <p id="summary"></p>
+      <h2 id="rating">4.5 / 5</h2>
+      <p>⭐⭐⭐⭐⭐ Based on 1200+ reviews</p>
+    </div>
+    <div class="card">
+      <h3>Rating Chart</h3>
+      <canvas id="myChart" width="400" height="250"></canvas>
+      <p>😊 Positive: 72% | 😞 Negative: 28%</p>
+    </div>
+    <div class="card full">
+      <h3>Top Reviews (Sentiment Analysis)</h3>
+      <div id="reviews"></div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

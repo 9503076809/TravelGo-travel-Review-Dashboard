@@ -1,0 +1,14 @@
+from flask import Flask, jsonify
+import requests
+
+app = Flask(__name__)
+
+@app.route('/api/city/<city_name>')
+def get_city(city_name):
+    # Wikipedia API
+    url = f"https://en.wikipedia.org/api/rest_v1/page/summary/{city_name}"
+    data = requests.get(url).json()
+    return jsonify(data)
+
+if __name__ == '__main__':
+    app.run(debug=True)

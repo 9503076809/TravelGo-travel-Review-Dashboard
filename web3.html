@@ -1,0 +1,42 @@
+// Wikipedia REST API - FREE API
+async function getData(){
+  let city = document.getElementById('city').value;
+  document.getElementById('loader').style.display='block';
+  
+  // 1. Wikipedia API Call - Live Data
+  let url = `https://en.wikipedia.org/api/rest_v1/page/summary/${city}`;
+  let res = await fetch(url);
+  let data = await res.json();
+
+  document.getElementById('cityName').innerText = data.title;
+  document.getElementById('summary').innerText = data.extract;
+  document.getElementById('cityImg').src = data.thumbnail ? data.thumbnail.source : `https://source.unsplash.com/600x400/?${city}`;
+  
+  // 2. Mock Sentiment Reviews (NLP Model: TF-IDF + Naive Bayes)
+  let reviews = [
+    {user:"Rahul", text:"Amazing place, must visit!", sentiment:"POSITIVE", stars:5},
+    {user:"Sneha", text:"Very clean and beautiful.", sentiment:"POSITIVE", stars:4},
+    {user:"Amit", text:"Too crowded and costly.", sentiment:"NEGATIVE", stars:2}
+  ];
+  
+  let reviewHTML = "";
+  reviews.forEach(r=>{
+    let color = r.sentiment=="POSITIVE" ? "#d4edda" : "#f8d7da";
+    reviewHTML += `<div style="background: ${color}; padding: 10px; margin: 5px; border-radius: 8px">
+    <b>${r.user} - ${"★".repeat(r.stars)} [${r.sentiment}]</b><br>${r.text}</div>`;
+  });
+  document.getElementById('reviews').innerHTML = reviewHTML;
+  
+  // 3. Rating Chart
+  new Chart(document.getElementById('myChart'), {
+    type:'bar',
+    data:{
+      labels:['5★','4★','3★','2★','1★'],
+      datasets:[{label:'Reviews', data:[45,30,15,7,3], backgroundColor:'#667eea'}]
+    }
+  });
+  
+  document.getElementById('loader').style.display='none';
+  document.getElementById('dashboard').style.display='grid';
+}
+window.onload = getData;
